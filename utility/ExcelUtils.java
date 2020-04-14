@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -15,6 +16,7 @@ public class ExcelUtils {
 	private static XSSFWorkbook wb = null;
 	private static XSSFSheet sheet = null;
 	private static String excellPath;
+	
 	
 	public static boolean setExcell(String path) {
 		if (wb != null) {
@@ -46,7 +48,7 @@ public class ExcelUtils {
 			return true;
 		} catch (Exception e) {
 			System.out.println(e.toString());
-			System.out.println("The worksheeta was not opened properly!");
+			System.out.println("The worksheet was not opened properly!");
 			return false;
 		}
 	}
@@ -55,7 +57,8 @@ public class ExcelUtils {
 		try {
 			XSSFRow r = sheet.getRow(row);
 			XSSFCell cell = r.getCell(column);
-			return cell.toString();
+			DataFormatter df = new DataFormatter();
+			return df.formatCellValue(cell);
 		} catch (NullPointerException e) {
 			System.out.println(e.toString());
 			System.out.println("Something is null!");
